@@ -321,7 +321,7 @@ var CFG = {
        - Seats              → how many people in that invitation (default 1)
        - RSVP = "No"        → guest is removed from the plan and the seats are freed
      Edit the sheet and every guest link shows the new plan (no need to re-send links). */
-  sheetCSV: "",
+  sheetCSV: "https://docs.google.com/spreadsheets/d/1v23A6bkBfkdudxn17qyvPN0Vfs4SL2U5ZRkVFo-bDMg/gviz/tq?tqx=out:csv",
   seatsPerTable: 10,
   tables: [                    /* optional table names / sizes */
     {n: 1, label: "Family",    seats: 10},
@@ -380,7 +380,7 @@ function buildTables(list){
   list.forEach(function(g){
     if(/^(no|not|declin|x)/i.test(g.rsvp||""))return;
     var e={name:g.name,pax:Math.max(1,+g.seats||1),link:slug(g.link||"")||slug(g.name)};
-    if(+g.table){var t=get(+g.table);if(g.label&&!t.label)t.label=g.label;t.guests.push(e)}else wait.push(e);
+    if(+g.table){var t=get(+g.table);if(g.label&&!t.sheetLabel){t.label=g.label;t.sheetLabel=1}t.guests.push(e)}else wait.push(e);
   });
   tables.sort(function(a,b){return a.n-b.n});
   wait.forEach(function(e){
