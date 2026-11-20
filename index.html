@@ -231,6 +231,12 @@ html[lang="si"] .rrow label{letter-spacing:.02em;font-size:.78rem;text-transform
 .rbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 .rbtns .btn{margin:0;padding:13px 22px;font-size:.66rem}
 .rhint{font-size:.85rem;color:var(--mute);margin:12px 0 0}
+/* no sideways scrolling on phones */
+html,body{overflow-x:hidden;max-width:100%}
+@supports (overflow:clip){html,body,#app{overflow-x:clip}}
+.deco{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.tg{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.tc,.out{overflow-wrap:anywhere}
 /* petals */
 .petals{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
 .petals i{position:absolute;top:-24px;border-radius:70% 0 70% 0;opacity:.75;animation:fall linear infinite}
@@ -241,8 +247,8 @@ html[lang="si"] .rrow label{letter-spacing:.02em;font-size:.78rem;text-transform
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="defs"></defs><defs><linearGradient id="ng" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a45a8"/><stop offset="1" stop-color="#e07fae"/></linearGradient></defs></svg>
 <div class="petals" id="petals" aria-hidden="true"></div>
-<svg class="lot" style="left:-20px" viewBox="0 0 150 200" aria-hidden="true"><g id="cornerL"></g></svg>
-<svg class="lot" style="right:-20px;transform:scaleX(-1)" viewBox="0 0 150 200" aria-hidden="true"><use href="#cornerL"/></svg>
+<div class="deco" aria-hidden="true"><svg class="lot" style="left:-20px" viewBox="0 0 150 200" aria-hidden="true"><g id="cornerL"></g></svg>
+<svg class="lot" style="right:-20px;transform:scaleX(-1)" viewBox="0 0 150 200" aria-hidden="true"><use href="#cornerL"/></svg></div>
 <button class="lang" id="lang">සිංහල</button>
 
 <div id="env">
@@ -491,7 +497,6 @@ var PAL={a:["#6d4fb0","#7b5cc0","#8f71cf","#a58ad9","#5b3f9c","#b9a2e6"],b:["#5f
 function sprigSymbol(id,P,seed){
   var k=seed,s="";function r(){k=(k*9301+49297)%233280;return k/233280}
   s+='<path d="M20 200C21 160 19 110 20.5 10" stroke="#7d9670" stroke-width="1.1" fill="none" stroke-linecap="round"/>';
-  s+='<path d="M20 196C14 176 9 154 8 132C13 150 17 172 20 196Z" fill="#9db394" opacity=".9"/><path d="M20.4 186C26 168 31 150 33 128C27 146 23 166 20.4 186Z" fill="#8aa582" opacity=".85"/><path d="M20 170C16 158 13 146 12 134" stroke="#9db394" stroke-width="1.4" fill="none" stroke-linecap="round"/>';
   var y=10,gap=3.2;
   for(var w=0;w<16;w++){
     var sz=.8+w*.04,n=w<2?1:(w<6?2:3);
