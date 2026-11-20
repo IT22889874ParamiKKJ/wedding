@@ -231,6 +231,17 @@ html[lang="si"] .rrow label{letter-spacing:.02em;font-size:.78rem;text-transform
 .rbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 .rbtns .btn{margin:0;padding:13px 22px;font-size:.66rem}
 .rhint{font-size:.85rem;color:var(--mute);margin:12px 0 0}
+/* lavender field + cartouche */
+.inv{padding:122px 24px 132px;background:radial-gradient(circle at 50% 0,rgba(240,170,210,.18),transparent 40%),radial-gradient(circle at 50% 100%,rgba(180,140,230,.2),transparent 40%),#fdfbff}
+.inv::before,.inv::after{display:none}
+.inv .garl{display:none}
+.inv>.field{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.inv .cart{position:relative;z-index:1;padding:50px 18px 54px}
+.cart>.cf{position:absolute;inset:0;width:100%;height:100%;z-index:0;overflow:visible;filter:drop-shadow(0 10px 22px rgba(91,63,140,.18))}
+.cart>*:not(.cf){position:relative;z-index:1}
+.mono{width:66px;height:66px;margin:0 auto 12px;border-radius:50%;border:1.3px solid #c9a24d;box-shadow:inset 0 0 0 4px #fffdfa,inset 0 0 0 5px rgba(201,162,77,.5);display:flex;align-items:center;justify-content:center}
+.mono span{font:400 1.75rem "Pinyon Script",cursive;background:linear-gradient(135deg,#d9b866,#a7802f);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:4px}
+.inv .dear{margin-top:0}
 /* no sideways scrolling on phones */
 html,body{overflow-x:hidden;max-width:100%}
 @supports (overflow:clip){html,body,#app{overflow-x:clip}}
@@ -270,8 +281,10 @@ html,body{overflow-x:hidden;max-width:100%}
     <div class="dots" id="dots"></div>
     <div class="caps" style="color:var(--mute)" data-t="you"></div>
     <div class="inv">
-      <i class="co" style="top:12px;left:12px"></i><i class="co" style="top:12px;right:12px;transform:scaleX(-1)"></i><i class="co" style="bottom:12px;left:12px;transform:scaleY(-1)"></i><i class="co" style="bottom:12px;right:12px;transform:scale(-1,-1)"></i>
+      <svg class="field" aria-hidden="true"></svg>
             <svg class="garl top" viewBox="0 0 400 200" aria-hidden="true" id="topArt"></svg>
+      <div class="cart"><svg class="cf" aria-hidden="true"></svg>
+      <div class="mono"><span>J&amp;J</span></div>
       <div class="dear"><div class="k" data-t="mr"></div><div class="script gname grad" id="iname"></div></div>
       <div class="orn"><i></i></div>
       <p class="pp" id="gp"></p>
@@ -295,6 +308,7 @@ html,body{overflow-x:hidden;max-width:100%}
       <p class="rb" id="rby"></p>
       <div class="ct" id="ct"></div>
       <div class="cd" id="cd"></div>
+      </div>
       <svg class="garl bot" viewBox="0 0 400 170" aria-hidden="true" id="botArt"></svg>
     </div>
     <div class="tb" id="tb"><div class="n" id="tn"></div><div><div class="caps" data-t="your_table"></div><div id="tl" style="font-size:1.1rem"></div><div class="caps" style="margin-top:4px;opacity:.85" data-t="see_plan"></div></div></div>
@@ -508,6 +522,53 @@ function sprigSymbol(id,P,seed){
   s+='<ellipse cx="20.5" cy="7" rx="1.4" ry="2.6" fill="'+P[3]+'"/>';
   return '<symbol id="'+id+'" viewBox="0 0 40 200" overflow="visible">'+s+'</symbol>';
 }
+function spike(cx,top,whorls,sc,P,r){
+  var s="",y=top,gap=3.4*sc;
+  for(var w=0;w<whorls;w++){var sz=(.75+w*.04)*sc,n=w<2?1:(w<5?2:3);
+    for(var j=0;j<n;j++){var off=(j-(n-1)/2)*(2.6+w*.09)*sc+(r()-.5)*.5,ang=off*11/sc+(r()-.5)*16,x=cx+off;
+      s+='<ellipse cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" rx="'+(1.6*sz).toFixed(2)+'" ry="'+(3*sz).toFixed(2)+'" fill="'+P[Math.floor(r()*5)]+'" transform="rotate('+ang.toFixed(1)+' '+x.toFixed(2)+' '+y.toFixed(2)+')"/>';}
+    y+=gap;gap+=(w>7?.5:.16)*sc;}
+  return s;
+}
+function uprightSymbol(id,P,seed){
+  var k=seed;function r(){k=(k*9301+49297)%233280;return k/233280}
+  var G="#86a876",s='<path d="M20 200C21 160 19 110 20.5 12" stroke="#7d9670" stroke-width="1.2" fill="none" stroke-linecap="round"/>'+
+    '<path d="M20.2 118C24 100 28 84 31 62" stroke="#7d9670" stroke-width=".9" fill="none" stroke-linecap="round"/>';
+  [176,150,126,100].forEach(function(y,i){var L=19-i*2.5;
+    s+='<path d="M20 '+y+'C23 '+(y-4)+' '+(26+L*.3)+' '+(y-9)+' '+(20+L)+' '+(y-L)+'C'+(24+L*.2)+' '+(y-8)+' 22.5 '+(y-4)+' 20 '+y+'Z" fill="'+G+'"/>'+
+       '<path d="M20 '+(y+4)+'C17 '+y+' '+(14-L*.3)+' '+(y-5)+' '+(20-L)+' '+(y+4-L)+'C'+(16-L*.2)+' '+(y-4)+' 17.5 '+y+' 20 '+(y+4)+'Z" fill="'+G+'" opacity=".9"/>';});
+  s+=spike(20.4,10,17,1,P,r)+spike(31,64,8,.8,P,r);
+  return '<symbol id="'+id+'" viewBox="0 0 40 200" overflow="visible">'+s+'</symbol>';
+}
+/* lavender field behind the frame, sized to the card in real pixels */
+function drawField(){
+  var inv=document.querySelector(".inv"),f=inv&&inv.querySelector(".field");if(!f)return;
+  var w=inv.clientWidth,hh=inv.clientHeight,k=7,s="",ids=["up1","up2","up3"];function r(){k=(k*9301+49297)%233280;return k/233280}
+  f.setAttribute("viewBox","0 0 "+w+" "+hh);
+  for(var x=4;x<w;x+=17){s+=sprig(x+r()*8,128+r()*26,130+r()*60,-12+r()*24,ids[Math.floor(r()*3)])}
+  for(var y=170;y<hh-60;y+=32){
+    s+=sprig(10+r()*14,y+r()*14,150+r()*60,-6+r()*16,ids[Math.floor(r()*3)]);
+    s+=sprig(w-10-r()*14,y+r()*14,150+r()*60,-10+r()*16,ids[Math.floor(r()*3)]);}
+  for(x=2;x<w;x+=16){s+=sprig(x+r()*8,hh+14,140+r()*70,-14+r()*28,ids[Math.floor(r()*3)])}
+  f.innerHTML=s;
+}
+/* cartouche: arched top & bottom, scooped corners, double outline */
+function cartPath(w,hh,d){
+  var o=1.5+d,A=24+d*.6,R=14,c=w/2;
+  return "M"+o+" "+(A+R)+"V"+(hh-A-R)+"A"+R+" "+R+" 0 0 1 "+(o+R)+" "+(hh-A)+
+    "C"+(w*.3)+" "+(hh-A)+" "+(w*.36)+" "+(hh-o)+" "+c+" "+(hh-o)+"C"+(w*.64)+" "+(hh-o)+" "+(w*.7)+" "+(hh-A)+" "+(w-o-R)+" "+(hh-A)+
+    "A"+R+" "+R+" 0 0 1 "+(w-o)+" "+(hh-A-R)+"V"+(A+R)+"A"+R+" "+R+" 0 0 1 "+(w-o-R)+" "+A+
+    "C"+(w*.7)+" "+A+" "+(w*.64)+" "+o+" "+c+" "+o+"C"+(w*.36)+" "+o+" "+(w*.3)+" "+A+" "+(o+R)+" "+A+
+    "A"+R+" "+R+" 0 0 1 "+o+" "+(A+R)+"Z";
+}
+function drawCart(){
+  var c=document.querySelector(".cart"),f=c&&c.querySelector(".cf");if(!f)return;
+  var w=c.clientWidth,hh=c.clientHeight;f.setAttribute("viewBox","0 0 "+w+" "+hh);
+  f.innerHTML='<path d="'+cartPath(w,hh,0)+'" fill="#fffdfa" fill-opacity=".97" stroke="#9a5cc6" stroke-width="2.4"/>'+
+    '<path d="'+cartPath(w,hh,6)+'" fill="none" stroke="#c9a24d" stroke-width="1"/>'+
+    '<path d="'+cartPath(w,hh,9.5)+'" fill="none" stroke="#e3a9cf" stroke-width=".6" stroke-opacity=".8"/>';
+}
+function frameArt(){drawField();drawCart()}
 var VAR={lav:"a",lavp:"c",lavb:"b"};
 function sprig(bx,by,len,ang,id){var w=len*40/200;return '<use href="#'+(id||"lav")+'" x="'+(bx-w/2).toFixed(1)+'" y="'+(by-len).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+len+'" transform="rotate('+ang+' '+bx+' '+by+')"/>'}
 function bloom(x,y,r){return '<use href="#bl" x="'+(x-r)+'" y="'+(y-r)+'" width="'+(2*r)+'" height="'+(2*r)+'"/>'}
@@ -521,7 +582,7 @@ function cluster(){
          sprig(8,-28,150,162,"lav")+sprig(22,-30,120,174,"lavp");
 }
 function artwork(){
-  $("defs").innerHTML=sprigSymbol("lav",PAL.a,11)+sprigSymbol("lavp",PAL.c,23)+sprigSymbol("lavb",PAL.b,37)+
+  $("defs").innerHTML=uprightSymbol("up1",PAL.a,5)+uprightSymbol("up2",PAL.c,17)+uprightSymbol("up3",PAL.b,29)+sprigSymbol("lav",PAL.a,11)+sprigSymbol("lavp",PAL.c,23)+sprigSymbol("lavb",PAL.b,37)+
     '<radialGradient id="wash"><stop offset="0" stop-color="#b9a2e3" stop-opacity=".55"/><stop offset="1" stop-color="#b9a2e3" stop-opacity="0"/></radialGradient>'+
     '<radialGradient id="washp"><stop offset="0" stop-color="#f1b5d3" stop-opacity=".5"/><stop offset="1" stop-color="#f1b5d3" stop-opacity="0"/></radialGradient>'+
     '<radialGradient id="pk" cx=".5" cy=".9" r=".9"><stop offset="0" stop-color="#fff0f7"/><stop offset=".6" stop-color="#f3b9d6"/><stop offset="1" stop-color="#d77fae"/></radialGradient>'+
@@ -715,7 +776,9 @@ $("srch").oninput=renderSeating;$("tb").onclick=function(){show(2)};
 $("yes").onclick=function(){rsvp(true)};$("no").onclick=function(){rsvp(false)};
 Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(b){b.onclick=function(){show(b.getAttribute("data-p"))}});
 window.addEventListener("hashchange",function(){location.reload()});
-artwork();hero();petals();loadSeating();render();
+artwork();hero();petals();loadSeating();render();frameArt();
+if(window.ResizeObserver){var ro=new ResizeObserver(function(){frameArt()});ro.observe(document.querySelector(".inv"))}else window.addEventListener("resize",frameArt);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(frameArt);
 setInterval(tick,1000);
 if(CFG.sheetCSV)setInterval(loadSeating,120000);
 </script>
