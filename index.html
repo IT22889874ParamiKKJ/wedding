@@ -288,6 +288,14 @@ html[lang="si"] .dt4 b small{font-size:.75rem}
 .akey{gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:12px}
 .astatus{margin-top:12px;text-align:center;font-size:.95rem;color:#3e7d4f}
 .astatus.bad{color:#b0453c}
+/* venue page */
+.vhall{font-size:2.7rem;line-height:1.1;margin-top:4px}
+.vhotel{font:600 .8rem "Jost",sans-serif;letter-spacing:.26em;padding-left:.26em;text-transform:uppercase;color:var(--ink);margin-top:4px}
+.vcard .vaddr{font-style:italic;margin-top:2px}
+.vcard .vwhen{color:var(--ink);font-size:1.05rem}
+.vmap{margin:16px 0 8px;border-radius:12px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3;background:#efe9f6}
+.vmap iframe{width:100%;height:100%;border:0;display:block}
+nav button{padding:4px 6px}
 /* no sideways scrolling on phones */
 html,body{overflow-x:hidden;max-width:100%}
 @supports (overflow:clip){html,body,#app{overflow-x:clip}}
@@ -373,9 +381,20 @@ html,body{overflow-x:hidden;max-width:100%}
     <div class="caps" style="color:var(--mute);margin-top:34px" data-t="ev_sub"></div>
     <h2 class="grad" data-t="ev_head"></h2>
     <div id="events"></div>
-    <div class="card"><div class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f1d794" stroke-width="1.6"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
-      <h3 data-t="venue"></h3><div style="font-size:1.4rem;color:var(--wine)" id="venue"></div><p id="addr"></p>
-      <a class="btn fill" id="map" target="_blank" rel="noopener" data-t="map"></a></div>
+  </div>
+
+  <div class="pv" id="p4">
+    <div class="caps" style="color:var(--mute);margin-top:34px" data-t="venue_sub"></div>
+    <h2 class="grad" data-t="venue"></h2>
+    <div class="card vcard"><div class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f1d794" stroke-width="1.6"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+      <div class="script grad vhall" id="venue"></div>
+      <div class="vhotel" id="vhotel"></div>
+      <p class="vaddr" id="addr"></p>
+      <div class="orn"><i></i></div>
+      <p class="vwhen" id="vwhen"></p>
+      <div class="vmap"><iframe id="vmap" loading="lazy" title="Map to the venue" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <a class="btn fill" id="dir" target="_blank" rel="noopener" data-t="dir"></a><a class="btn" id="map" target="_blank" rel="noopener" data-t="map"></a>
+    </div>
   </div>
 
   <div class="pv" id="p2">
@@ -392,6 +411,7 @@ html,body{overflow-x:hidden;max-width:100%}
 <nav id="nav">
   <button class="on" data-p="0"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10H3z"/></svg><span data-t="n_home"></span></button>
   <button data-p="1"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span data-t="n_ev"></span></button>
+  <button data-p="4"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-t="n_venue"></span></button>
   <button data-p="2"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="3.5" r="1.5"/><circle cx="12" cy="20.5" r="1.5"/><circle cx="3.5" cy="12" r="1.5"/><circle cx="20.5" cy="12" r="1.5"/></svg><span data-t="n_seat"></span></button>
   <button data-p="3"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg><span>RSVP</span></button>
 </nav>
@@ -479,8 +499,8 @@ var CFG = {
   ]
 };
 /* ================================================= */
-var T={en:{env_title:"Wedding Invitation",env_for:"An invitation for",env_btn:"Open Invitation",you:"You are invited",mr:"Dear",together:"together with",request:"request the honour of your presence at the marriage of their children",hero:"We are getting married",days:"Days",hours:"Hours",mins:"Mins",secs:"Secs",cal:"Add to Calendar",card:"Our invitation card",save:"Save the card",n_home:"Home",n_ev:"Events",n_seat:"Seating",ev_sub:"Celebrate with us",ev_head:"Wedding Events",venue:"Venue",map:"View on Map",seat_sub:"Find your table",seat_head:"Seating Plan",search:"Search the seating list",table:"Table",your_table:"Your table",see_plan:"View seating plan",nomatch:"No guest found",live:"Updated automatically",free:"free",rsvp_sub:"Kindly reply",rsvp_hint:"Your reply opens in WhatsApp – just press send.",rsvp_by:"RSVP by",will:"Will you be joining us?",guests_n:"Number of guests",send_to:"Send my reply to",accept:"Joyfully accept",decline:"Regretfully decline",nophone:"RSVP number is not set yet",at:"At",moments:"Our Engagement"},
-si:{env_title:"මංගල ආරාධනා",env_for:"ආරාධිතයා",env_btn:"ආරාධනය විවෘත කරන්න",you:"ඔබට ආරාධනා කරමු",mr:"ආදරණීය",together:"සමඟ",request:"තම දරුවන්ගේ මංගල්‍යයට ඔබගේ පැමිණීම ගෞරවයෙන් අයැද සිටිති",hero:"අපි විවාහ වෙමු",days:"දින",hours:"පැය",mins:"මිනිත්තු",secs:"තත්පර",cal:"දින දර්ශනයට එක් කරන්න",card:"අපගේ ආරාධනා පත්‍රය",save:"පත්‍රය සුරකින්න",n_home:"මුල් පිටුව",n_ev:"උත්සව",n_seat:"ආසන",ev_sub:"අප සමඟ සමරන්න",ev_head:"මංගල උත්සව",venue:"උත්සව ස්ථානය",map:"සිතියමේ බලන්න",seat_sub:"ඔබගේ මේසය සොයන්න",seat_head:"ආසන සැලැස්ම",search:"නම මගින් සොයන්න",table:"මේසය",your_table:"ඔබගේ මේසය",see_plan:"ආසන සැලැස්ම බලන්න",nomatch:"අමුත්තකු හමු නොවීය",live:"ස්වයංක්‍රීයව යාවත්කාලීන වේ",free:"හිස්",rsvp_sub:"කරුණාකර පිළිතුරු දෙන්න",rsvp_hint:"ඔබගේ පිළිතුර WhatsApp හි විවෘත වේ – යවන්න ඔබන්න.",rsvp_by:"පිළිතුරු දිය යුතු දිනය",will:"ඔබ අප සමඟ එක් වේවිද?",guests_n:"අමුත්තන් ගණන",send_to:"පිළිතුර යැවිය යුත්තේ",accept:"සතුටින් පැමිණෙමු",decline:"කනගාටුවෙන් පැමිණිය නොහැක",nophone:"RSVP අංකය තවම ඇතුළත් කර නැත",at:"ස්ථානය",moments:"අපගේ විවාහ ගිවිසුම"}};
+var T={en:{env_title:"Wedding Invitation",env_for:"An invitation for",env_btn:"Open Invitation",you:"You are invited",mr:"Dear",together:"together with",request:"request the honour of your presence at the marriage of their children",hero:"We are getting married",days:"Days",hours:"Hours",mins:"Mins",secs:"Secs",cal:"Add to Calendar",card:"Our invitation card",save:"Save the card",n_home:"Home",n_ev:"Events",n_seat:"Seating",n_venue:"Venue",venue_sub:"Where we celebrate",dir:"Get Directions",ev_sub:"Celebrate with us",ev_head:"Wedding Events",venue:"Venue",map:"View on Map",seat_sub:"Find your table",seat_head:"Seating Plan",search:"Search the seating list",table:"Table",your_table:"Your table",see_plan:"View seating plan",nomatch:"No guest found",live:"Updated automatically",free:"free",rsvp_sub:"Kindly reply",rsvp_hint:"Your reply opens in WhatsApp – just press send.",rsvp_by:"RSVP by",will:"Will you be joining us?",guests_n:"Number of guests",send_to:"Send my reply to",accept:"Joyfully accept",decline:"Regretfully decline",nophone:"RSVP number is not set yet",at:"At",moments:"Our Engagement"},
+si:{env_title:"මංගල ආරාධනා",env_for:"ආරාධිතයා",env_btn:"ආරාධනය විවෘත කරන්න",you:"ඔබට ආරාධනා කරමු",mr:"ආදරණීය",together:"සමඟ",request:"තම දරුවන්ගේ මංගල්‍යයට ඔබගේ පැමිණීම ගෞරවයෙන් අයැද සිටිති",hero:"අපි විවාහ වෙමු",days:"දින",hours:"පැය",mins:"මිනිත්තු",secs:"තත්පර",cal:"දින දර්ශනයට එක් කරන්න",card:"අපගේ ආරාධනා පත්‍රය",save:"පත්‍රය සුරකින්න",n_home:"මුල් පිටුව",n_ev:"උත්සව",n_seat:"ආසන",n_venue:"ස්ථානය",venue_sub:"අප සමරන ස්ථානය",dir:"මාර්ගය බලන්න",ev_sub:"අප සමඟ සමරන්න",ev_head:"මංගල උත්සව",venue:"උත්සව ස්ථානය",map:"සිතියමේ බලන්න",seat_sub:"ඔබගේ මේසය සොයන්න",seat_head:"ආසන සැලැස්ම",search:"නම මගින් සොයන්න",table:"මේසය",your_table:"ඔබගේ මේසය",see_plan:"ආසන සැලැස්ම බලන්න",nomatch:"අමුත්තකු හමු නොවීය",live:"ස්වයංක්‍රීයව යාවත්කාලීන වේ",free:"හිස්",rsvp_sub:"කරුණාකර පිළිතුරු දෙන්න",rsvp_hint:"ඔබගේ පිළිතුර WhatsApp හි විවෘත වේ – යවන්න ඔබන්න.",rsvp_by:"පිළිතුරු දිය යුතු දිනය",will:"ඔබ අප සමඟ එක් වේවිද?",guests_n:"අමුත්තන් ගණන",send_to:"පිළිතුර යැවිය යුත්තේ",accept:"සතුටින් පැමිණෙමු",decline:"කනගාටුවෙන් පැමිණිය නොහැක",nophone:"RSVP අංකය තවම ඇතුළත් කර නැත",at:"ස්ථානය",moments:"අපගේ විවාහ ගිවිසුම"}};
 var WD={en:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],si:["ඉරිදා","සඳුදා","අඟහරුවාදා","බදාදා","බ්‍රහස්පතින්දා","සිකුරාදා","සෙනසුරාදා"]},
 MO={en:["January","February","March","April","May","June","July","August","September","October","November","December"],si:["ජනවාරි","පෙබරවාරි","මාර්තු","අප්‍රේල්","මැයි","ජූනි","ජූලි","අගෝස්තු","සැප්තැම්බර්","ඔක්තෝබර්","නොවැම්බර්","දෙසැම්බර්"]};
 var L="en";try{L=localStorage.getItem("lang")||"en"}catch(e){}
@@ -701,7 +721,9 @@ function render(){
   if(seat)$("pn").value=String(Math.min(6,seat.g.pax));
   renderGallery(tr);
   $("hn").textContent=CFG.groom+" & "+CFG.bride;$("hd").textContent=dd+" · "+(dt.getMonth()+1)+" · "+yy;
-  $("venue").textContent=CFG.hall+" · "+CFG.venue;$("addr").textContent=CFG.address;$("note").textContent=CFG.note;
+  $("venue").textContent=CFG.hall;$("vhotel").textContent=CFG.venue;$("vwhen").textContent=ds+" · "+CFG.timeText[L];
+  var mq=encodeURIComponent(CFG.mapQuery),ms="https://www.google.com/maps?q="+mq+"&z=15&output=embed";if($("vmap").getAttribute("src")!==ms)$("vmap").setAttribute("src",ms);
+  $("dir").href="https://www.google.com/maps/dir/?api=1&destination="+mq;$("addr").textContent=CFG.address;$("note").textContent=CFG.note;
   $("map").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(CFG.mapQuery);
   var dz=CFG.dateISO.replace(/-/g,"");
   $("cal").href="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(CFG.groom+" & "+CFG.bride+" Wedding")+"&dates="+dz+"T"+CFG.startTime.replace(":","")+"00/"+dz+"T"+CFG.endTime.replace(":","")+"00&ctz=Asia/Colombo&details="+encodeURIComponent(CFG.poruwaText.en)+"&location="+encodeURIComponent(CFG.hall+", "+CFG.venue+", "+CFG.address);
@@ -710,16 +732,16 @@ function render(){
   var ev=$("events");ev.innerHTML="";
   CFG.events.forEach(function(e){
     var c=document.createElement("div");c.className="card";
-    c.innerHTML='<div class="ic"><svg width="30" height="30" viewBox="0 0 40 40" fill="none" stroke="#f1d794" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+(ICON[e.icon]||ICON.r)+'</svg></div><h3></h3><p class="tm"></p><p class="dd"></p><p class="vv"></p>';
+    c.innerHTML='<div class="ic"><svg width="30" height="30" viewBox="0 0 40 40" fill="none" stroke="#f1d794" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+(ICON[e.icon]||ICON.r)+'</svg></div><h3></h3><p class="tm"></p><p class="dd"></p>';
     c.querySelector("h3").textContent=(L==="si"&&e.si)?e.si:e.name;c.querySelector(".tm").textContent=e.time;
-    c.querySelector(".dd").textContent=ds;c.querySelector(".vv").textContent=CFG.hall+", "+CFG.venue+", "+CFG.address;ev.appendChild(c);
+    c.querySelector(".dd").textContent=ds;ev.appendChild(c);
   });
   document.title=CFG.groom+" & "+CFG.bride;
   renderSeating();tick();
 }
 function show(n){
   var toRsvp=n==3;if(toRsvp)n=0;
-  [0,1,2,3].forEach(function(i){$("p"+i).className="pv"+(i==n?" on":"")});
+  [0,1,2,3,4].forEach(function(i){$("p"+i).className="pv"+(i==n?" on":"")});
   Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(b){b.className=(b.getAttribute("data-p")==(toRsvp?3:n))?"on":""});
   if(toRsvp)setTimeout(function(){$("rsvp").scrollIntoView({behavior:"smooth",block:"start"})},60);else window.scrollTo(0,0);
 }
