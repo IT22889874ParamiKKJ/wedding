@@ -279,6 +279,15 @@ html[lang="si"] .dt4 b small{font-size:.75rem}
 .gline{display:flex;align-items:flex-end;justify-content:center;min-height:3rem;margin:16px 0 8px;padding:0 6px 1px;border-bottom:1px dashed #5d5566}
 .gline span{font-size:2.1rem;line-height:1.15;padding:0 4px;margin-bottom:-.12em}
 .inv{padding-top:22%}
+/* admin: add guests */
+.ah{font:500 .8rem "Jost",sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--wine);text-align:center;margin:34px 0 12px;padding-top:20px;border-top:1px solid var(--line)}
+.af{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.af label{display:flex;flex-direction:column;gap:4px;font:500 .62rem "Jost",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.af label.wide{grid-column:1/3}
+.af input,.akey input{font:inherit;font-size:1rem;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);letter-spacing:0;text-transform:none}
+.akey{gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.astatus{margin-top:12px;text-align:center;font-size:.95rem;color:#3e7d4f}
+.astatus.bad{color:#b0453c}
 /* no sideways scrolling on phones */
 html,body{overflow-x:hidden;max-width:100%}
 @supports (overflow:clip){html,body,#app{overflow-x:clip}}
@@ -395,9 +404,19 @@ html,body{overflow-x:hidden;max-width:100%}
     <div class="stat" id="astat"></div>
     <p class="c" id="asrc"></p>
     <div class="c"><button class="btn fill" id="all">Links for everyone on the guest list</button><button class="btn" id="copyAll">Copy all links</button><button class="btn" id="csv">Download links (CSV)</button></div>
-    <p style="margin-top:20px">Or type extra names, one per line:</p>
-    <textarea id="names" rows="4" placeholder="Nimal Perera&#10;Kamal and Family"></textarea>
-    <div class="c"><button class="btn" id="gen">Create links for these names</button></div>
+    <h3 class="ah">Add a guest</h3>
+    <div class="af">
+      <label class="wide">Name on the card<input id="fName" placeholder="Mr &amp; Mrs Kamal Perera"></label>
+      <label>Table<input id="fTable" type="number" min="1" placeholder="auto"></label>
+      <label>Seats<input id="fSeats" type="number" min="1" value="2"></label>
+      <label class="wide">Short link (optional)<input id="fLink" placeholder="kamal"></label>
+    </div>
+    <div class="c"><button class="btn fill" id="addOne">Save to Google Sheet &amp; create link</button></div>
+    <p style="margin-top:18px">Or add several at once – one guest per line: <b>Name, Table, Seats, Link</b></p>
+    <textarea id="names" rows="4" placeholder="Mr &amp; Mrs Kamal Perera, 1, 4, kamal&#10;Dr &amp; Mrs Silva, 2, 2, silva&#10;Ruwan Fernando, , 2"></textarea>
+    <div class="c"><button class="btn" id="gen">Save all to Google Sheet &amp; create links</button></div>
+    <div id="akey" class="akey" style="display:none"><span>Admin password</span><input id="wkey" type="password" autocomplete="off"><button class="btn" id="wkeySave">Remember</button></div>
+    <div id="astatus" class="astatus"></div>
     <div id="links" style="margin-top:14px"></div></div>
 </div>
 
@@ -441,6 +460,8 @@ var CFG = {
        - Seats              → how many people in that invitation (default 1)
        - RSVP = "No"        → guest is removed from the plan and the seats are freed
      Edit the sheet and every guest link shows the new plan (no need to re-send links). */
+  /* Link from Apps Script "Deploy → Web app" – lets #admin save guests into the sheet */
+  sheetWriteURL: "",
   sheetCSV: "https://docs.google.com/spreadsheets/d/1v23A6bkBfkdudxn17qyvPN0Vfs4SL2U5ZRkVFo-bDMg/gviz/tq?tqx=out:csv",
   seatsPerTable: 10,
   tables: [                    /* optional table names / sizes */
@@ -514,7 +535,7 @@ function loadSeating(){
   if(!CFG.sheetCSV){TABLES=buildTables(CFG.guests||[]);return}
   try{var c=JSON.parse(localStorage.getItem("seatcache")||"null");if(c&&c.src===CFG.sheetCSV){TABLES=buildTables(c.g);UPDATED=new Date(c.at)}}catch(e){}
   if(!TABLES.length)TABLES=buildTables([]);
-  fetch(CFG.sheetCSV+(CFG.sheetCSV.indexOf("?")>-1?"&":"?")+"_="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(txt){
+  return fetch(CFG.sheetCSV+(CFG.sheetCSV.indexOf("?")>-1?"&":"?")+"_="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(txt){
     var g=csvGuests(txt);TABLES=buildTables(g);UPDATED=new Date();
     try{localStorage.setItem("seatcache",JSON.stringify({src:CFG.sheetCSV,g:g,at:UPDATED.getTime()}))}catch(e){}
     render();
@@ -768,7 +789,8 @@ function renderAdmin(){
 function makeLinks(names){
   var out=$("links");out.innerHTML="";LINKS=[];
   names.forEach(function(n){
-    n=n.trim();var s=findSeat(n),sl=s?s.g.link:slug(n);if(!sl)return;
+    var lk="";if(typeof n==="object"){lk=n.link||"";n=n.name||""}
+    n=n.trim();var s=findSeat(n),sl=s?s.g.link:(slug(lk)||slug(n));if(!sl)return;
     if(s)n=s.name;
     var url=baseUrl()+"#"+sl,row=document.createElement("div");row.className="out";
     LINKS.push({name:n,url:url,table:s?s.t.n:""});
@@ -787,7 +809,27 @@ function makeLinks(names){
   });
 }
 $("all").onclick=function(){var n=[];TABLES.forEach(function(t){t.guests.forEach(function(g){n.push(g.name)})});makeLinks(n)};
-$("gen").onclick=function(){makeLinks($("names").value.split("\n"))};
+function astatus(t,bad){var e=$("astatus");e.textContent=t;e.className="astatus"+(bad?" bad":"")}
+function wkey(){var k="";try{k=localStorage.getItem("wkey")||""}catch(e){}return k}
+function parseGuestLines(t){return t.split("\n").map(function(l){var p=l.split(",").map(function(x){return x.trim()});return {name:p[0]||"",table:p[1]||"",seats:p[2]||"",link:p[3]||""}}).filter(function(r){return r.name})}
+function saveGuests(rows){
+  if(!rows.length){astatus("Type at least one name.",1);return}
+  if(!CFG.sheetWriteURL){astatus("Links created, but NOT saved to the sheet – the Google Sheet connection (sheetWriteURL) is not set up yet. Add these guests to the sheet yourself for now.",1);makeLinks(rows);return}
+  var k=wkey();if(!k){$("akey").style.display="flex";astatus("Enter the admin password once, then press Save again.",1);return}
+  astatus("Saving to Google Sheet…");
+  fetch(CFG.sheetWriteURL,{method:"POST",body:JSON.stringify({key:k,rows:rows})}).then(function(r){return r.json()}).then(function(res){
+    if(!res.ok){if(/password/i.test(res.error||"")){try{localStorage.removeItem("wkey")}catch(e){}$("akey").style.display="flex"}astatus("Not saved: "+(res.error||"unknown error"),1);return}
+    astatus("Saved to Google Sheet ("+res.added+" new, "+res.updated+" updated). Loading seating…");
+    return new Promise(function(ok){setTimeout(ok,1500)}).then(loadSeating).then(function(){renderAdmin();makeLinks(rows);astatus("Saved to Google Sheet ("+res.added+" new, "+res.updated+" updated). Links are ready below.")});
+  }).catch(function(){astatus("Could not reach Google Sheet. Check your internet connection and try again.",1)});
+}
+$("addOne").onclick=function(){
+  var r={name:$("fName").value.trim(),table:$("fTable").value.trim(),seats:$("fSeats").value.trim(),link:$("fLink").value.trim()};
+  saveGuests(r.name?[r]:[]);
+  if(r.name){$("fName").value="";$("fTable").value="";$("fLink").value=""}
+};
+$("gen").onclick=function(){saveGuests(parseGuestLines($("names").value))};
+$("wkeySave").onclick=function(){try{localStorage.setItem("wkey",$("wkey").value.trim())}catch(e){}$("akey").style.display="none";astatus("Password remembered on this device. Press Save again.")};
 $("copyAll").onclick=function(){if(!LINKS.length)$("all").onclick();navigator.clipboard.writeText(LINKS.map(function(l){return l.name+" – "+l.url}).join("\n")).then(function(){toast("All links copied")},function(){toast("Copy failed")})};
 $("csv").onclick=function(){if(!LINKS.length)$("all").onclick();
   var c="Name,Table,Link\n"+LINKS.map(function(l){return '"'+l.name.replace(/"/g,'""')+'",'+l.table+","+l.url}).join("\n");
