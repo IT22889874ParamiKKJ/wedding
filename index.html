@@ -210,6 +210,27 @@ html[lang="si"] .tw,html[lang="si"] .rq,html[lang="si"] .tm2,html[lang="si"] .de
 .inv .spr{width:108px;height:144px;pointer-events:none;opacity:.95}
 .inv{background:radial-gradient(ellipse at 50% 0,rgba(180,140,230,.24),transparent 55%),radial-gradient(circle at 0 0,rgba(240,160,200,.18),transparent 30%),radial-gradient(circle at 100% 0,rgba(240,160,200,.18),transparent 30%),radial-gradient(circle at 0 100%,rgba(180,140,230,.22),transparent 35%),radial-gradient(circle at 100% 100%,rgba(240,160,200,.2),transparent 35%),#fffdfa}
 .inv::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#c9a24d,#e8a5c8 30%,#a98bdc 50%,#e8a5c8 70%,#c9a24d) top/100% 3px no-repeat,linear-gradient(90deg,#c9a24d,#e8a5c8 30%,#a98bdc 50%,#e8a5c8 70%,#c9a24d) bottom/100% 3px no-repeat}
+/* botanical garland */
+.inv{overflow:hidden}
+.inv .garl{display:block;width:calc(100% + 56px);height:auto;margin:-34px -28px 0}
+.inv .garl.bot{margin:4px -28px -30px}
+.inv .dear{margin-top:-6px}
+.hsp{width:90px;height:150px;bottom:-20px}
+.hsp.l{left:-36px}.hsp.r{right:-36px}
+/* RSVP on home page */
+#rsvp{margin-top:40px;scroll-margin-top:16px}
+.rcard{margin-top:18px}
+.rnote{font-style:italic;color:var(--ink);font-size:1.15rem;margin:0}
+.rdead{font:500 .66rem "Jost","Noto Serif Sinhala",sans-serif;letter-spacing:.24em;padding-left:.24em;text-transform:uppercase;color:#b08d3e;margin-top:8px}
+.rq2{font-family:"Pinyon Script","Noto Serif Sinhala",cursive;font-size:1.9rem;color:var(--wine);line-height:1.2}
+html[lang="si"] .rq2{font-family:"Noto Serif Sinhala",serif;font-size:1.15rem}
+.rrow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0 6px}
+.rrow label{display:flex;flex-direction:column;gap:6px;font:500 .6rem "Jost","Noto Serif Sinhala",sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+html[lang="si"] .rrow label{letter-spacing:.02em;font-size:.78rem;text-transform:none}
+.rrow select{min-width:120px;text-align:center}
+.rbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.rbtns .btn{margin:0;padding:13px 22px;font-size:.66rem}
+.rhint{font-size:.85rem;color:var(--mute);margin:12px 0 0}
 /* petals */
 .petals{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
 .petals i{position:absolute;top:-24px;border-radius:70% 0 70% 0;opacity:.75;animation:fall linear infinite}
@@ -244,8 +265,7 @@ html[lang="si"] .tw,html[lang="si"] .rq,html[lang="si"] .tm2,html[lang="si"] .de
     <div class="caps" style="color:var(--mute)" data-t="you"></div>
     <div class="inv">
       <i class="co" style="top:12px;left:12px"></i><i class="co" style="top:12px;right:12px;transform:scaleX(-1)"></i><i class="co" style="bottom:12px;left:12px;transform:scaleY(-1)"></i><i class="co" style="bottom:12px;right:12px;transform:scale(-1,-1)"></i>
-      <svg class="spr" viewBox="0 0 120 160" style="top:0;left:0" aria-hidden="true"></svg><svg class="spr" viewBox="0 0 120 160" style="top:0;right:0;transform:scaleX(-1)" aria-hidden="true"></svg>
-      <svg class="lh" viewBox="0 0 320 120" aria-hidden="true" id="topArt"></svg>
+            <svg class="garl top" viewBox="0 0 400 200" aria-hidden="true" id="topArt"></svg>
       <div class="dear"><div class="k" data-t="mr"></div><div class="script gname grad" id="iname"></div></div>
       <div class="orn"><i></i></div>
       <p class="pp" id="gp"></p>
@@ -269,10 +289,27 @@ html[lang="si"] .tw,html[lang="si"] .rq,html[lang="si"] .tm2,html[lang="si"] .de
       <p class="rb" id="rby"></p>
       <div class="ct" id="ct"></div>
       <div class="cd" id="cd"></div>
-      <svg class="lh" viewBox="0 0 320 100" style="margin-top:10px" aria-hidden="true" id="botArt"></svg>
+      <svg class="garl bot" viewBox="0 0 400 170" aria-hidden="true" id="botArt"></svg>
     </div>
     <div class="tb" id="tb"><div class="n" id="tn"></div><div><div class="caps" data-t="your_table"></div><div id="tl" style="font-size:1.1rem"></div><div class="caps" style="margin-top:4px;opacity:.85" data-t="see_plan"></div></div></div>
     <a class="btn fill" id="cal" target="_blank" rel="noopener" data-t="cal"></a>
+    <section id="rsvp">
+      <div class="caps" style="color:var(--mute)" data-t="rsvp_sub"></div>
+      <h2 class="grad">RSVP</h2>
+      <div class="card rcard">
+        <p class="rnote" id="note"></p>
+        <div class="rdead" id="rby2"></div>
+        <div class="orn"><i></i></div>
+        <div class="rq2" data-t="will"></div>
+        <div class="rrow">
+          <label><span data-t="guests_n"></span><select id="pn"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+          <label><span data-t="send_to"></span><select id="to"></select></label>
+        </div>
+        <div class="rbtns"><button class="btn fill" id="yes" data-t="accept"></button><button class="btn" id="no" data-t="decline"></button></div>
+        <p class="rhint" data-t="rsvp_hint"></p>
+        <div class="script grad" style="font-size:2.4rem;margin-top:14px" id="sign"></div>
+      </div>
+    </section>
     <div class="gal" id="gal"></div>
     <div class="ic2">
       <div class="caps" style="color:var(--mute);margin-bottom:10px" data-t="card"></div>
@@ -298,20 +335,7 @@ html[lang="si"] .tw,html[lang="si"] .rq,html[lang="si"] .tm2,html[lang="si"] .de
     <div id="tg" class="tg"></div>
   </div>
 
-  <div class="pv" id="p3">
-    <div class="caps" style="color:var(--mute);margin-top:34px" data-t="rsvp_sub"></div>
-    <h2 class="grad">RSVP</h2>
-    <div class="card" style="margin-top:34px"><p style="font-style:italic;color:var(--ink);font-size:1.15rem" id="note"></p>
-      <div class="caps" style="color:var(--gold);margin-top:8px" id="rby2"></div>
-      <div class="rule"><i></i></div>
-      <div class="caps" style="color:var(--wine);margin-bottom:10px" data-t="will"></div>
-      <div class="caps" style="margin:10px 0" data-t="guests_n"></div>
-      <select id="pn"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
-      <div class="caps" style="margin:14px 0 10px" data-t="send_to"></div>
-      <select id="to"></select><br>
-      <button class="btn fill" id="yes" data-t="accept"></button><button class="btn" id="no" data-t="decline"></button>
-      <div class="script grad" style="font-size:2.4rem;margin-top:20px" id="sign"></div></div>
-  </div>
+  <div class="pv" id="p3"></div>
 </div>
 
 <nav id="nav">
@@ -392,8 +416,8 @@ var CFG = {
   ]
 };
 /* ================================================= */
-var T={en:{env_title:"Wedding Invitation",env_for:"An invitation for",env_btn:"Open Invitation",you:"You are invited",mr:"Dear",together:"together with",request:"request the honour of your presence at the marriage of their children",hero:"We are getting married",days:"Days",hours:"Hours",mins:"Mins",secs:"Secs",cal:"Add to Calendar",card:"Our invitation card",save:"Save the card",n_home:"Home",n_ev:"Events",n_seat:"Seating",ev_sub:"Celebrate with us",ev_head:"Wedding Events",venue:"Venue",map:"View on Map",seat_sub:"Find your table",seat_head:"Seating Plan",search:"Search the seating list",table:"Table",your_table:"Your table",see_plan:"View seating plan",nomatch:"No guest found",live:"Updated automatically",free:"free",rsvp_sub:"Kindly reply",rsvp_by:"RSVP by",will:"Will you be joining us?",guests_n:"Number of guests",send_to:"Send my reply to",accept:"Joyfully accept",decline:"Regretfully decline",nophone:"RSVP number is not set yet",at:"At",moments:"Our Engagement"},
-si:{env_title:"මංගල ආරාධනා",env_for:"ආරාධිතයා",env_btn:"ආරාධනය විවෘත කරන්න",you:"ඔබට ආරාධනා කරමු",mr:"ආදරණීය",together:"සමඟ",request:"තම දරුවන්ගේ මංගල්‍යයට ඔබගේ පැමිණීම ගෞරවයෙන් අයැද සිටිති",hero:"අපි විවාහ වෙමු",days:"දින",hours:"පැය",mins:"මිනිත්තු",secs:"තත්පර",cal:"දින දර්ශනයට එක් කරන්න",card:"අපගේ ආරාධනා පත්‍රය",save:"පත්‍රය සුරකින්න",n_home:"මුල් පිටුව",n_ev:"උත්සව",n_seat:"ආසන",ev_sub:"අප සමඟ සමරන්න",ev_head:"මංගල උත්සව",venue:"උත්සව ස්ථානය",map:"සිතියමේ බලන්න",seat_sub:"ඔබගේ මේසය සොයන්න",seat_head:"ආසන සැලැස්ම",search:"නම මගින් සොයන්න",table:"මේසය",your_table:"ඔබගේ මේසය",see_plan:"ආසන සැලැස්ම බලන්න",nomatch:"අමුත්තකු හමු නොවීය",live:"ස්වයංක්‍රීයව යාවත්කාලීන වේ",free:"හිස්",rsvp_sub:"කරුණාකර පිළිතුරු දෙන්න",rsvp_by:"පිළිතුරු දිය යුතු දිනය",will:"ඔබ අප සමඟ එක් වේවිද?",guests_n:"අමුත්තන් ගණන",send_to:"පිළිතුර යැවිය යුත්තේ",accept:"සතුටින් පැමිණෙමු",decline:"කනගාටුවෙන් පැමිණිය නොහැක",nophone:"RSVP අංකය තවම ඇතුළත් කර නැත",at:"ස්ථානය",moments:"අපගේ විවාහ ගිවිසුම"}};
+var T={en:{env_title:"Wedding Invitation",env_for:"An invitation for",env_btn:"Open Invitation",you:"You are invited",mr:"Dear",together:"together with",request:"request the honour of your presence at the marriage of their children",hero:"We are getting married",days:"Days",hours:"Hours",mins:"Mins",secs:"Secs",cal:"Add to Calendar",card:"Our invitation card",save:"Save the card",n_home:"Home",n_ev:"Events",n_seat:"Seating",ev_sub:"Celebrate with us",ev_head:"Wedding Events",venue:"Venue",map:"View on Map",seat_sub:"Find your table",seat_head:"Seating Plan",search:"Search the seating list",table:"Table",your_table:"Your table",see_plan:"View seating plan",nomatch:"No guest found",live:"Updated automatically",free:"free",rsvp_sub:"Kindly reply",rsvp_hint:"Your reply opens in WhatsApp – just press send.",rsvp_by:"RSVP by",will:"Will you be joining us?",guests_n:"Number of guests",send_to:"Send my reply to",accept:"Joyfully accept",decline:"Regretfully decline",nophone:"RSVP number is not set yet",at:"At",moments:"Our Engagement"},
+si:{env_title:"මංගල ආරාධනා",env_for:"ආරාධිතයා",env_btn:"ආරාධනය විවෘත කරන්න",you:"ඔබට ආරාධනා කරමු",mr:"ආදරණීය",together:"සමඟ",request:"තම දරුවන්ගේ මංගල්‍යයට ඔබගේ පැමිණීම ගෞරවයෙන් අයැද සිටිති",hero:"අපි විවාහ වෙමු",days:"දින",hours:"පැය",mins:"මිනිත්තු",secs:"තත්පර",cal:"දින දර්ශනයට එක් කරන්න",card:"අපගේ ආරාධනා පත්‍රය",save:"පත්‍රය සුරකින්න",n_home:"මුල් පිටුව",n_ev:"උත්සව",n_seat:"ආසන",ev_sub:"අප සමඟ සමරන්න",ev_head:"මංගල උත්සව",venue:"උත්සව ස්ථානය",map:"සිතියමේ බලන්න",seat_sub:"ඔබගේ මේසය සොයන්න",seat_head:"ආසන සැලැස්ම",search:"නම මගින් සොයන්න",table:"මේසය",your_table:"ඔබගේ මේසය",see_plan:"ආසන සැලැස්ම බලන්න",nomatch:"අමුත්තකු හමු නොවීය",live:"ස්වයංක්‍රීයව යාවත්කාලීන වේ",free:"හිස්",rsvp_sub:"කරුණාකර පිළිතුරු දෙන්න",rsvp_hint:"ඔබගේ පිළිතුර WhatsApp හි විවෘත වේ – යවන්න ඔබන්න.",rsvp_by:"පිළිතුරු දිය යුතු දිනය",will:"ඔබ අප සමඟ එක් වේවිද?",guests_n:"අමුත්තන් ගණන",send_to:"පිළිතුර යැවිය යුත්තේ",accept:"සතුටින් පැමිණෙමු",decline:"කනගාටුවෙන් පැමිණිය නොහැක",nophone:"RSVP අංකය තවම ඇතුළත් කර නැත",at:"ස්ථානය",moments:"අපගේ විවාහ ගිවිසුම"}};
 var WD={en:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],si:["ඉරිදා","සඳුදා","අඟහරුවාදා","බදාදා","බ්‍රහස්පතින්දා","සිකුරාදා","සෙනසුරාදා"]},
 MO={en:["January","February","March","April","May","June","July","August","September","October","November","December"],si:["ජනවාරි","පෙබරවාරි","මාර්තු","අප්‍රේල්","මැයි","ජූනි","ජූලි","අගෝස්තු","සැප්තැම්බර්","ඔක්තෝබර්","නොවැම්බර්","දෙසැම්බර්"]};
 var L="en";try{L=localStorage.getItem("lang")||"en"}catch(e){}
@@ -462,48 +486,54 @@ function findSeat(raw){
 }
 function toast(m){var t=$("toast");t.textContent=m;t.style.display="block";setTimeout(function(){t.style.display="none"},2600)}
 /* ---------- lavender artwork ---------- */
-var PUR=["#c9b6ee","#a98bdc","#8a69c8","#b59de4","#7656b8"],PNK=["#f0c6e2","#dd9fd0","#c27fc4","#e8b3da","#a964b8"];
-function sprigSymbol(id,P){
-  var s='<path d="M30 160C31 125 29 80 30 16" stroke="#7b9467" stroke-width="1.5" fill="none"/>'+
-    '<path d="M30 140C20 128 14 110 12 92C22 106 28 122 30 140Z" fill="#9db58a" opacity=".85"/><path d="M30 128C40 116 46 100 47 84C38 98 32 112 30 128Z" fill="#88a674" opacity=".8"/>';
-  for(var i=0;i<14;i++){var y=18+i*6,r=2.4+i*.17,c=P[i%P.length],c2=P[(i+2)%P.length];
-    s+='<ellipse cx="'+(30-r*1.1).toFixed(1)+'" cy="'+y+'" rx="'+r.toFixed(1)+'" ry="'+(r*1.6).toFixed(1)+'" fill="'+c+'" transform="rotate(-28 '+(30-r*1.1).toFixed(1)+' '+y+')"/>'+
-         '<ellipse cx="'+(30+r*1.1).toFixed(1)+'" cy="'+(y+3)+'" rx="'+r.toFixed(1)+'" ry="'+(r*1.6).toFixed(1)+'" fill="'+c2+'" transform="rotate(28 '+(30+r*1.1).toFixed(1)+' '+(y+3)+')"/>';}
-  s+='<ellipse cx="30" cy="12" rx="2.4" ry="4.2" fill="'+P[0]+'"/>';
-  return '<symbol id="'+id+'" viewBox="0 0 60 160">'+s+'</symbol>';
+/* realistic lavender: long thin stem, whorls of small buds at the tip */
+var PAL={a:["#6d4fb0","#7b5cc0","#8f71cf","#a58ad9","#5b3f9c","#b9a2e6"],b:["#5f5fb8","#7272c8","#8a86d6","#a29ee2","#4f4fa6","#bdb8ee"],c:["#9a5fb4","#b073c4","#c48ad2","#d6a6de","#86509f","#e3bfe8"]};
+function sprigSymbol(id,P,seed){
+  var k=seed,s="";function r(){k=(k*9301+49297)%233280;return k/233280}
+  s+='<path d="M20 200C21 160 19 110 20.5 10" stroke="#7d9670" stroke-width="1.1" fill="none" stroke-linecap="round"/>';
+  s+='<path d="M20 196C14 176 9 154 8 132C13 150 17 172 20 196Z" fill="#9db394" opacity=".9"/><path d="M20.4 186C26 168 31 150 33 128C27 146 23 166 20.4 186Z" fill="#8aa582" opacity=".85"/><path d="M20 170C16 158 13 146 12 134" stroke="#9db394" stroke-width="1.4" fill="none" stroke-linecap="round"/>';
+  var y=10,gap=3.2;
+  for(var w=0;w<16;w++){
+    var sz=.8+w*.04,n=w<2?1:(w<6?2:3);
+    for(var j=0;j<n;j++){var off=(j-(n-1)/2)*(2.2+w*.09)+(r()-.5)*.6,ang=off*11+(r()-.5)*16,c=P[Math.floor(r()*5)];
+      s+='<ellipse cx="'+(20.3+off).toFixed(2)+'" cy="'+(y+r()*1.2).toFixed(2)+'" rx="'+(1.25*sz).toFixed(2)+'" ry="'+(2.5*sz).toFixed(2)+'" fill="'+c+'" transform="rotate('+ang.toFixed(1)+' '+(20.3+off).toFixed(2)+' '+y.toFixed(2)+')"/>';
+      if(r()>.55)s+='<circle cx="'+(20.3+off+(r()-.5)).toFixed(2)+'" cy="'+(y-1.2).toFixed(2)+'" r=".8" fill="'+P[5]+'" opacity=".9"/>';}
+    y+=gap;gap+=w>8?.6:.18;
+  }
+  s+='<ellipse cx="20.5" cy="7" rx="1.4" ry="2.6" fill="'+P[3]+'"/>';
+  return '<symbol id="'+id+'" viewBox="0 0 40 200" overflow="visible">'+s+'</symbol>';
 }
-function sprig(bx,by,len,ang,id){var w=len*60/160;return '<use href="#'+(id||"lav")+'" x="'+(bx-w/2).toFixed(1)+'" y="'+(by-len).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+len+'" transform="rotate('+ang+' '+bx+' '+by+')"/>'}
+var VAR={lav:"a",lavp:"c",lavb:"b"};
+function sprig(bx,by,len,ang,id){var w=len*40/200;return '<use href="#'+(id||"lav")+'" x="'+(bx-w/2).toFixed(1)+'" y="'+(by-len).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+len+'" transform="rotate('+ang+' '+bx+' '+by+')"/>'}
 function bloom(x,y,r){return '<use href="#bl" x="'+(x-r)+'" y="'+(y-r)+'" width="'+(2*r)+'" height="'+(2*r)+'"/>'}
-function leaf(x,y,len,ang){var w=len*.4;return '<use href="#gl" x="'+(x-w/2).toFixed(1)+'" y="'+(y-len)+'" width="'+w.toFixed(1)+'" height="'+len+'" transform="rotate('+ang+' '+x+' '+y+')"/>'}
 function wash(cx,cy,r,o,g){return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="url(#'+(g||"wash")+')" opacity="'+o+'"/>'}
 function speck(x,y,w,hh,n,seed){var s="",k=seed||1;function rnd(){k=(k*9301+49297)%233280;return k/233280}
-  for(var i=0;i<n;i++){var c=["#a98bdc","#c27fc4","#8a69c8","#e3a9cf","#c9a24d"][i%5];s+='<circle cx="'+(x+rnd()*w).toFixed(1)+'" cy="'+(y+rnd()*hh).toFixed(1)+'" r="'+(.6+rnd()*1.8).toFixed(1)+'" fill="'+c+'" opacity="'+(.35+rnd()*.4).toFixed(2)+'"/>'}return s}
+  for(var i=0;i<n;i++){var c=["#a98bdc","#c27fc4","#8a69c8","#e3a9cf","#c9a24d"][i%5];s+='<circle cx="'+(x+rnd()*w).toFixed(1)+'" cy="'+(y+rnd()*hh).toFixed(1)+'" r="'+(.6+rnd()*1.6).toFixed(1)+'" fill="'+c+'" opacity="'+(.3+rnd()*.35).toFixed(2)+'"/>'}return s}
+/* one corner cluster: stems gather off-canvas at the corner, sprigs fan along both edges */
+function cluster(){
+  return sprig(-30,30,235,86,"lav")+sprig(-26,44,215,97,"lavp")+sprig(-30,18,200,76,"lavb")+
+         sprig(-22,8,190,112,"lav")+sprig(-14,-8,175,128,"lavp")+sprig(-4,-22,165,146,"lavb")+
+         sprig(8,-28,150,162,"lav")+sprig(22,-30,120,174,"lavp");
+}
 function artwork(){
-  $("defs").innerHTML=sprigSymbol("lav",PUR)+sprigSymbol("lavp",PNK)+
+  $("defs").innerHTML=sprigSymbol("lav",PAL.a,11)+sprigSymbol("lavp",PAL.c,23)+sprigSymbol("lavb",PAL.b,37)+
     '<radialGradient id="wash"><stop offset="0" stop-color="#b9a2e3" stop-opacity=".55"/><stop offset="1" stop-color="#b9a2e3" stop-opacity="0"/></radialGradient>'+
     '<radialGradient id="washp"><stop offset="0" stop-color="#f1b5d3" stop-opacity=".5"/><stop offset="1" stop-color="#f1b5d3" stop-opacity="0"/></radialGradient>'+
     '<radialGradient id="pk" cx=".5" cy=".9" r=".9"><stop offset="0" stop-color="#fff0f7"/><stop offset=".6" stop-color="#f3b9d6"/><stop offset="1" stop-color="#d77fae"/></radialGradient>'+
     '<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e0a0"/><stop offset=".5" stop-color="#c9a24d"/><stop offset="1" stop-color="#a7802f"/></linearGradient>'+
     '<symbol id="bl" viewBox="-10 -10 20 20"><g fill="url(#pk)" stroke="#d68bb4" stroke-width=".3"><ellipse cy="-4.6" rx="3.3" ry="4.8"/><ellipse cy="-4.6" rx="3.3" ry="4.8" transform="rotate(72)"/><ellipse cy="-4.6" rx="3.3" ry="4.8" transform="rotate(144)"/><ellipse cy="-4.6" rx="3.3" ry="4.8" transform="rotate(216)"/><ellipse cy="-4.6" rx="3.3" ry="4.8" transform="rotate(288)"/></g><circle r="2.1" fill="#e9c46a"/><circle r="1" fill="#c9a24d"/></symbol>'+
-    '<symbol id="gl" viewBox="0 0 20 50"><path d="M10 50C1 36 2 13 10 0C18 13 19 36 10 50Z" fill="url(#gold)"/><path d="M10 48V4" stroke="#fff4d6" stroke-width=".7" opacity=".7"/></symbol>';
-  var G='stroke="url(#gold)" stroke-width="1.1" fill="none"';
-  $("topArt").innerHTML=wash(160,74,96,.75)+wash(110,96,40,.6,"washp")+wash(210,96,40,.6,"washp")+
-    '<path d="M28 114L68 20L252 10L294 100" '+G+'/><path d="M44 118L82 28L238 20L280 112" '+G+' opacity=".5"/>'+speck(40,10,240,100,26,7)+
-    leaf(160,114,58,-80)+leaf(160,114,58,80)+leaf(160,114,50,-58)+leaf(160,114,50,58)+
-    sprig(160,116,96,-74,"lavp")+sprig(160,116,108,-56)+sprig(160,116,112,-38,"lavp")+sprig(160,116,116,-20)+sprig(160,116,118,-4,"lavp")+
-    sprig(160,116,118,8)+sprig(160,116,116,24,"lavp")+sprig(160,116,112,40)+sprig(160,116,108,58,"lavp")+sprig(160,116,96,76)+
-    bloom(124,108,7)+bloom(196,108,7)+bloom(142,111,9)+bloom(178,111,9)+bloom(160,106,11)+'<circle cx="160" cy="118" r="2.5" fill="#c9a24d"/>';
-  $("botArt").innerHTML=wash(50,74,70,.65)+wash(270,74,70,.65)+wash(160,90,60,.45,"washp")+'<path d="M18 8L54 90L266 90L302 8" '+G+'/>'+speck(30,20,260,70,22,3)+
-    leaf(14,98,50,50)+leaf(14,98,46,80)+leaf(306,98,50,-50)+leaf(306,98,46,-80)+
-    sprig(12,98,86,46,"lavp")+sprig(12,98,100,60)+sprig(12,98,92,74,"lavp")+sprig(12,98,80,88)+
-    sprig(308,98,86,-46,"lavp")+sprig(308,98,100,-60)+sprig(308,98,92,-74,"lavp")+sprig(308,98,80,-88)+
-    bloom(30,90,8)+bloom(48,94,6)+bloom(290,90,8)+bloom(272,94,6)+'<path d="M140 90h40" stroke="#c9a24d"/><path d="M160 84l5 6-5 6-5-6z" fill="#c9a24d"/>';
-  var spr=wash(20,20,60,.6)+wash(30,40,30,.5,"washp")+speck(10,10,90,110,14,5)+leaf(8,8,46,150)+leaf(8,8,40,118)+
-    sprig(8,8,118,128,"lavp")+sprig(8,8,132,146)+sprig(8,8,104,164,"lavp")+bloom(16,16,8)+bloom(30,12,5);
-  Array.prototype.forEach.call(document.querySelectorAll(".inv .spr"),function(e){e.innerHTML=spr});
+    '<g id="clu">'+cluster()+'</g>';
+  var mono='<circle cx="200" cy="128" r="36" fill="#fffdfa" fill-opacity=".85" stroke="url(#gold)" stroke-width="1.3"/><circle cx="200" cy="128" r="31" fill="none" stroke="#c9a24d" stroke-opacity=".5" stroke-width=".7"/>'+
+    '<text x="200" y="140" text-anchor="middle" style="font:34px \'Pinyon Script\',cursive;fill:url(#gold)">J&amp;J</text>'+
+    '<path d="M150 128h-34M250 128h34" stroke="#c9a24d" stroke-width=".8"/><path d="M112 128l4-4 4 4-4 4z M288 128l-4-4-4 4 4 4z" fill="#c9a24d"/>';
+  $("topArt").innerHTML=wash(30,20,110,.7)+wash(370,20,110,.7)+wash(200,0,90,.45,"washp")+speck(20,10,360,150,30,7)+
+    '<use href="#clu"/><use href="#clu" transform="translate(400 0) scale(-1 1)"/>'+bloom(70,34,6)+bloom(330,34,6)+bloom(52,58,4.5)+bloom(348,58,4.5)+mono;
+  $("botArt").innerHTML=wash(30,160,110,.7)+wash(370,160,110,.7)+wash(200,170,80,.45,"washp")+speck(20,20,360,140,26,3)+
+    '<use href="#clu" transform="translate(0 170) scale(1 -1)"/><use href="#clu" transform="translate(400 170) scale(-1 -1)"/>'+bloom(70,136,6)+bloom(330,136,6)+
+    '<path d="M150 52h100" stroke="#c9a24d" stroke-width=".8"/><path d="M200 46l6 6-6 6-6-6z" fill="#c9a24d"/>';
   var co='<svg viewBox="0 0 46 46" width="46" height="46"><path d="M1.5 45V12A10.5 10.5 0 0 1 12 1.5H45" stroke="#c9a24d" fill="none"/><path d="M7 45V17A10 10 0 0 1 17 7H45" stroke="#c9a24d" stroke-opacity=".45" fill="none"/><circle cx="12" cy="12" r="3" fill="#c9a24d"/><path d="M18 12h8M12 18v8" stroke="#c9a24d" stroke-width=".8"/></svg>';
   Array.prototype.forEach.call(document.querySelectorAll(".inv .co"),function(e){e.innerHTML=co});
-  $("cornerL").innerHTML=wash(30,170,80,.6)+wash(60,190,40,.5,"washp")+leaf(20,205,70,-14)+leaf(20,205,60,64)+sprig(20,205,170,8)+sprig(20,205,150,22,"lavp")+sprig(20,205,135,36)+sprig(20,205,115,50,"lavp")+sprig(20,205,95,64)+bloom(34,192,9)+bloom(52,198,6)+bloom(22,186,6);
+  $("cornerL").innerHTML=wash(30,170,80,.55)+sprig(14,215,200,6,"lav")+sprig(10,215,185,16,"lavp")+sprig(18,215,170,27,"lavb")+sprig(6,215,150,38,"lav")+bloom(30,182,5);
 }
 var ICON={p:'<path d="M5 30h30M9 30V17M31 30V17M4 17L20 5l16 12zM15 30v-8h10v8"/>',r:'<circle cx="15" cy="23" r="8"/><circle cx="25" cy="23" r="8"/><path d="M20 6l3 5h-6z"/>'};
 function tableSvg(t,me){
@@ -579,9 +609,10 @@ function render(){
   renderSeating();tick();
 }
 function show(n){
+  var toRsvp=n==3;if(toRsvp)n=0;
   [0,1,2,3].forEach(function(i){$("p"+i).className="pv"+(i==n?" on":"")});
-  Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(b){b.className=(b.getAttribute("data-p")==n)?"on":""});
-  window.scrollTo(0,0);
+  Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(b){b.className=(b.getAttribute("data-p")==(toRsvp?3:n))?"on":""});
+  if(toRsvp)setTimeout(function(){$("rsvp").scrollIntoView({behavior:"smooth",block:"start"})},60);else window.scrollTo(0,0);
 }
 function openInv(){
   $("env").className="go";
@@ -605,7 +636,7 @@ function tick(){
 var PH=((CFG.photos&&CFG.photos.length)?CFG.photos:(window.EMBED_PHOTOS||[])).map(function(p){return typeof p==="string"?{src:p,pos:"50% 35%"}:p}),LBI=0;
 function hero(){
   var s=$("slides"),d=$("dots"),k=0,timer;
-  $("hsl").innerHTML=leaf(30,165,60,-10)+leaf(30,165,52,56)+sprig(30,165,150,4)+sprig(30,165,136,18,"lavp")+sprig(30,165,120,32)+sprig(30,165,100,46,"lavp")+bloom(40,150,9)+bloom(56,156,6);
+  $("hsl").innerHTML=sprig(12,175,165,8,"lav")+sprig(8,175,150,22,"lavp")+sprig(16,175,135,-4,"lavb")+bloom(30,150,5);
   if(!PH.length){document.querySelector(".hero").style.display="none";return}
   PH.forEach(function(p,i){var im=document.createElement("img");im.src=p.src;im.alt="Janith and Jayani";im.style.objectPosition=p.pos;s.appendChild(im);
     var dot=document.createElement("i");dot.onclick=function(){go(i);clearInterval(timer);timer=setInterval(next,4500)};d.appendChild(dot)});
